@@ -33,8 +33,8 @@ Built with plain JavaScript (no TypeScript) and no authentication: everyone who 
 ### 1. Clone the repository
 
 ```bash
-git clone [link]
-cd [repo-name]
+git clone https://github.com/gadeshx/Expense-Tracker-2.git
+cd Expense-Tracker-2
 ```
 
 ### 2. Install dependencies
@@ -49,11 +49,12 @@ Create an empty database in PostgreSQL (for example `expense_tracker`), then run
 
 ```sql
 CREATE TABLE expenses (
-    id SERIAL PRIMARY KEY,
-    amount NUMERIC(10, 2) NOT NULL,
-    category VARCHAR(50) NOT NULL,
-    description VARCHAR(50),
-    date DATE NOT NULL
+id SERIAL PRIMARY KEY,
+amount NUMERIC(10,2) NOT NULL,
+category text NOT NULL,
+description text,
+date DATE NOT NULL,
+created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 ```
 
