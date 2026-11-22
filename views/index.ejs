@@ -1,0 +1,16 @@
+<%- include("partials/header.ejs") %>
+    <% if (locals.error) { %>
+        <p class="error">
+            <%= error %>
+        </p>
+        <% } %>
+            <h1 class="hero">Fast, Easy, Reliable way to track your Expenses</h1>
+            <ul class="home-links">
+                <li>
+                    <a href="/expenses">Your Expenses</a>
+                </li>
+                <li>
+                    <a href="/expenses/new">Add new expense</a>
+                </li>
+            </ul>
+            <%- include("partials/footer.ejs") %>

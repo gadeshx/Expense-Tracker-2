@@ -1,0 +1,82 @@
+<%- include("partials/header.ejs") %>
+    <% if (locals.error) { %>
+        <p class="error">
+            <%= error %>
+        </p>
+        <% } %>
+            <% if (locals.message) { %>
+                <p class="message">
+                    <%= message %>
+                </p>
+                <% } %>
+                    <form action="/expenses" method="get">
+                        <select name="category" id="category">
+                            <option value="">All</option>
+                            <% categoryOptions.forEach(option=> { %>
+                                <option value="<%= option %>" <%=filter===option ? "selected" : "" %>>
+                                    <%= option %>
+                                </option>
+                                <% }) %>
+                        </select>
+                        <label for="month">Pick a month</label>
+                        <input type="month" name="month" id="month" value="<%=locals.month || "" %>">
+                        <button type="submit">Filter</button>
+                    </form>
+
+                    <% if (expenses.length===0) { %>
+                        <% if (locals.filter && locals.month) { %>
+                            <h1>No <%= filter %> expenses in <%= month %>. <a href="/expenses">Show all</a></h1>
+                            <% } else if (locals.filter) { %>
+                                <h1>No <%= filter %> expenses. <a href="/expenses">Show all</a></h1>
+                                <% } else if (locals.month) { %>
+                                    <h1>No expenses in <%= month %>. <a href="/expenses">Show all</a></h1>
+                                    <% } else { %>
+                                        <h1>No expenses yet. <a href="/expenses/new">Add one now!</a></h1>
+                                        <% } %>
+                                            <% } else { %>
+                                                <h2>
+                                                    Total: $<%= total %>
+                                                </h2>
+                                                <h3>
+                                                    Expenses: <%= count %>
+                                                </h3>
+                                                <% if (locals.monthRange) { %>
+                                                    <p>
+                                                        <%= filter ? filter + " expenses" : "All expenses" %> during
+                                                            <%= month %>:
+                                                    </p>
+                                                    <% } %>
+                                                        <ul>
+                                                            <% expenses.forEach((expense)=> { %>
+                                                                <li>
+                                                                    <h2>
+                                                                        $<%= expense.amount %>
+                                                                    </h2>
+                                                                    <p>
+                                                                        For:
+                                                                        <%= expense.category %>
+                                                                    </p>
+                                                                    <p>
+                                                                        At:
+                                                                        <%= expense.date %>
+                                                                    </p>
+
+                                                                    <% if (expense.description) { %>
+                                                                        <p>Notes: <%= expense.description %>
+                                                                        </p>
+                                                                        <% } %>
+                                                                            <a
+                                                                                href="/expenses/<%= expense.id %>/edit?category=<%= filter || '' %>&month=<%= locals.month || ''%>">Edit</a>
+                                                                            <form
+                                                                                action="/expenses/<%= expense.id %>/delete?category=<%= filter || '' %>&month=<%= locals.month || ''%>"
+                                                                                method="post"
+                                                                                onsubmit="return confirm('Are you sure you want to delete this expense?')">
+                                                                                <button type="submit">Delete</button>
+                                                                            </form>
+                                                                </li>
+                                                                <% }); %>
+                                                        </ul>
+                                                        <h3><a href="/expenses">Show All</a></h3>
+                                                        <h3><a href="/expenses/new">Add more expenses</a></h3>
+                                                        <% } %>
+                                                            <%- include("partials/footer.ejs") %>

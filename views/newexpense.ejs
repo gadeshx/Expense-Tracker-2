@@ -1,0 +1,13 @@
+<%- include("partials/header.ejs") %>
+    <% if (locals.error) { %>
+        <p class="error">
+            <%= error %>
+        </p>
+        <% } %>
+
+            <form action="/expenses/new" method="post">
+                <%- include("partials/expenseform.ejs") %>
+                    <button type="submit">Add Expense</button>
+            </form>
+
+            <%- include("partials/footer.ejs") %>

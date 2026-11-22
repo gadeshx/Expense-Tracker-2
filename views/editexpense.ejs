@@ -1,0 +1,14 @@
+<%- include("partials/header.ejs") %>
+
+    <% if (locals.error) { %>
+        <p class="error">
+            <%= error %>
+        </p>
+        <% } %>
+            <form action="/expenses/<%= id %>/edit?category=<%= filter || '' %>&month=<%= locals.month || ''%>"
+                method="post">
+                <%- include("partials/expenseform.ejs") %>
+                    <button type="submit">Save Changes</button>
+            </form>
+
+            <%- include("partials/footer.ejs") %>
